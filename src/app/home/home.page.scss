@@ -1,0 +1,145 @@
+#container {
+  text-align: center;
+  padding: 5px;
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+h3 {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  color: #333;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+p {
+  margin: 5px 0;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+ion-button {
+  margin: 10px 0;
+}
+
+.search-container {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+ion-searchbar {
+  margin-bottom: 10px;
+}
+
+.location {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.current-weather p {
+  margin: 5px 0;
+  font-size: 1rem
+}
+
+img {
+  width: 50px;
+  height: 50px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.current-weather img,
+.hourly-updates img,
+.daily-forecast img {
+  display: inline-block;
+}
+
+.unit-toggle {
+  padding: 16px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+ion-segment {
+  margin: 0 auto;
+  max-width: 300px;
+}
+
+.notifications-toggle {
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 16px;
+}
+
+.weather-alerts {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #ffe5e5;
+  border: 1px solid #ffcccc;
+  border-radius: 5px;
+}
+
+.weather-alerts p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+  color: #d9534f;
+}
+
+.hourly-updates {
+  text-align: center;
+}
+
+.hourly-item {
+  margin: 10px 0;
+}
+
+.hourly-item img {
+  width: 50px;
+  height: 50px;
+}
+
+.daily-forecast {
+  text-align: center;
+}
+
+.header-row {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+ion-col img {
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin-right: 5px;
+}

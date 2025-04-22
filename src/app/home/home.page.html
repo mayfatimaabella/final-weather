@@ -1,0 +1,145 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Weather App
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-toolbar>
+
+  <ion-item lines="none">
+
+    <ion-button (click)="goToCurrentLocation()">
+      <ion-icon name="navigate-outline"></ion-icon>
+    </ion-button>
+
+    <ion-searchbar [(ngModel)]="manualLocation" placeholder="Enter City Name"></ion-searchbar>
+    <ion-button expand="block" (click)="fetchWeatherForManualLocation()">Search</ion-button>
+  </ion-item>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-segment [(ngModel)]="unit" (ionChange)="onUnitChange()">
+    <ion-segment-button value="metric">
+      <ion-label>Celsius (°C)</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="imperial">
+      <ion-label>Fahrenheit (°F)</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-toolbar>
+
+<ion-toolbar>
+  <ion-item>
+    <ion-label>Severe Weather Alerts</ion-label>
+    <ion-toggle [(ngModel)]="notificationsEnabled" (ionChange)="onNotificationsToggle()"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>Dark Mode</ion-label>
+    <ion-toggle [(ngModel)]="darkModeEnabled" (ionChange)="onThemeToggle()"></ion-toggle>
+  </ion-item>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+
+    <ion-card>
+      <ion-card-header>
+   
+          <h2 *ngIf="locationName" class="location">
+          <strong>{{ locationName }}</strong>
+        </h2>
+
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="weatherData?.current; else noCurrentWeather" class="current-weather">
+
+          <img
+            *ngIf="weatherData.current.weather[0].icon"
+            [src]="getWeatherIcon(weatherData.current.weather[0].icon)"
+            alt="Weather Icon"
+          /><br>
+
+          <h1>{{ weatherData.current.temp }}°{{ unit === 'metric' ? 'C' : 'F' }}</h1>
+
+          <p><strong>Feels Like:</strong> {{ weatherData.current.feels_like }}°{{ unit === 'metric' ? 'C' : 'F' }}</p>
+
+          <p>{{ weatherData.current.weather[0].description }}</p>
+          <p><strong>Humidity:</strong> {{ weatherData.current.humidity }}%</p>
+          <p>
+            <strong>Wind Speed:</strong> {{ weatherData.current.wind_speed }} {{ unit === 'metric' ? 'm/s' : 'mph' }}
+          </p>
+        </div>
+        <ng-template #noCurrentWeather>
+          <p>No current weather data available.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title><strong>Hourly Forecast</strong></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="weatherData?.hourly; else noHourlyUpdates" class="hourly-updates">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="4" *ngFor="let hour of weatherData.hourly.slice(0, 24)">
+                <div class="hourly-item">
+                  <img
+                    *ngIf="hour.weather[0].icon"
+                    [src]="getWeatherIcon(hour.weather[0].icon)"
+                    alt="Weather Icon"
+                  />
+                  <p><strong>{{ getHour(hour.dt) }}</strong></p>
+                  <p>{{ hour.temp }}°{{ unit === 'metric' ? 'C' : 'F' }}</p>
+                  <p>{{ hour.weather[0].description }}</p>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <ng-template #noHourlyUpdates>
+          <p>No hourly updates available.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title><strong>5-Day Forecast</strong></ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div *ngIf="weatherData?.daily; else noDailyForecast" class="daily-forecast">
+          <ion-grid>
+            <ion-row class="header-row">
+              <ion-col><strong>Date</strong></ion-col>
+              <ion-col><strong>Day</strong></ion-col>
+              <ion-col><strong>Night</strong></ion-col>
+              <ion-col><strong>Weather</strong></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let day of weatherData.daily.slice(0, 5)">
+              <ion-col>{{ getDay(day.dt) }}</ion-col>
+              <ion-col>{{ day.temp.day }}°{{ unit === 'metric' ? 'C' : 'F' }}</ion-col>
+              <ion-col>{{ day.temp.night }}°{{ unit === 'metric' ? 'C' : 'F' }}</ion-col>
+              <ion-col>
+                <img
+                  *ngIf="day.weather[0].icon"
+                  [src]="getWeatherIcon(day.weather[0].icon)"
+                  alt="Weather Icon"
+                />
+                {{ day.weather[0].description }}
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+        <ng-template #noDailyForecast>
+          <p>No 5-day forecast available.</p>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
